@@ -1,0 +1,8 @@
+<p>Allumer ou éteindre la led de l'arduino</p>
+<button (click)="switchOnLight()">Allumer la lumière</button>
+<button (click)="switchOffLight()">Eteindre la lumière</button>
+<p></p>
+
+<button (click)="updateTemperature()">Temperature</button>
+<div *ngIf="!waitTemp">{{ temperature }}</div>
+<div *ngIf="waitTemp">récupération de la température en cours</div>
