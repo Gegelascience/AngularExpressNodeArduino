@@ -5,6 +5,8 @@
   #include <avr/power.h>
 #endif
 
+#include <avr/wdt.h>
+
 /* Broche du bus 1-Wire alim 5v */
 const byte BROCHE_ONEWIRE = 7;
 
@@ -19,12 +21,12 @@ Ds18b20 sensor(BROCHE_ONEWIRE);
 
 Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 
-int delayval = 500; // delay for half a second
+int delayval = 50; // delay for writting on leds
+int timeBeforeReset = 2;
 
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(115200);
-  Serial.setTimeout(500);
   pinMode(LED_BUILTIN, OUTPUT);
   #if defined (__AVR_ATtiny85__)
     if (F_CPU == 16000000) clock_prescale_set(clock_div_1);
@@ -34,6 +36,9 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
 
+  if(timeBeforeReset == 0){
+    software_Reboot();
+  }
   while (Serial.available()) {
      String commande = Serial.readStringUntil('\n');
      Serial.println("commande: " + commande);
@@ -97,8 +102,18 @@ void setRGB(Adafruit_NeoPixel pixels, int nbrPixels, int delayTime, int colors[]
   
   for(int i=0;i<nbrPixels;i++){
     pixels.setPixelColor(i, pixels.Color(colors[0],colors[1],colors[2])); // Moderately bright blue color.
-    // delay(delayTime); // Delay for a period of time (in milliseconds).
-
   }
   pixels.show(); // This sends the updated pixel color to the hardware.
+  timeBeforeReset--;
+  
+}
+
+void software_Reboot()
+{
+  wdt_enable(WDTO_60MS);
+
+  while(1)
+  {
+
+  }
 }
