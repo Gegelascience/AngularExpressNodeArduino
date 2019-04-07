@@ -30,6 +30,12 @@ app.post("/light", function (req, res) {
   res.status(200).json({ light: req.body.light });
 });
 
+app.post("/neopixel", function (req, res) {
+  port.write(req.body.color)
+  res.setHeader('Content-Type', 'application/json');
+  res.status(200).json({ color: req.body.color });
+});
+
 app.get("/temperature", function (req, res) {
   port.write('temperature');
   setTimeout(() => {

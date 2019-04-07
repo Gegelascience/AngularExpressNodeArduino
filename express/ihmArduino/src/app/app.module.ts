@@ -7,6 +7,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { ArduinoOnOffService } from './services/arduino-on-off.service';
 import { HomeComponent } from './components/home/home.component';
 import { Error404Component } from './components/error404/error404.component';
+import { ArduinoTemperatureService } from './services/arduino-temperature.service';
+import { ArduinoNeoPixelsService } from './services/arduino-neo-pixels.service';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,7 @@ import { Error404Component } from './components/error404/error404.component';
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [ArduinoOnOffService],
+  providers: [ArduinoOnOffService, ArduinoTemperatureService, ArduinoNeoPixelsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

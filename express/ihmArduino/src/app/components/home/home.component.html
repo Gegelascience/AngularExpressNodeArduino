@@ -6,3 +6,7 @@
 <button (click)="updateTemperature()">Temperature</button>
 <div *ngIf="!waitTemp">{{ temperature }}</div>
 <div *ngIf="waitTemp">récupération de la température en cours</div>
+<button (click)="setRed()">Lumière Rouge</button>
+<button (click)="setGreen()">Lumière Verte</button>
+<button (click)="setBlue()">Lumière Bleue</button>
+<button (click)="setWhite()">Lumière Blanche</button>
