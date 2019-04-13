@@ -5,9 +5,10 @@ const port = new SerialPort(usbserial, { baudRate: 115200 })
 const parser = port.pipe(new Readline({ delimiter: '\r\n' }))
 var temperature = "2";
 parser.on('data', data => {
-  console.log(data)
-  if (data !== "led on" && data !== "led off") {
-    temperature = data;
+  console.log(data);
+  var resp = JSON.parse(data);
+  if (resp.commande === "temperature") {
+    temperature = resp.result;
   }
 })
 
@@ -25,19 +26,19 @@ app.use(express.static(root));
 
 // all REST API
 app.post("/light", function (req, res) {
-  port.write(req.body.light)
+  port.write(JSON.stringify({ commande: req.body.light, result: "" }));
   res.setHeader('Content-Type', 'application/json');
   res.status(200).json({ light: req.body.light });
 });
 
 app.post("/neopixel", function (req, res) {
-  port.write(req.body.color)
+  port.write(JSON.stringify({ commande: req.body.color, result: "" }));
   res.setHeader('Content-Type', 'application/json');
   res.status(200).json({ color: req.body.color });
 });
 
 app.get("/temperature", function (req, res) {
-  port.write('temperature');
+  port.write(JSON.stringify({ commande: "temperature", result: "" }));
   setTimeout(() => {
     res.setHeader('Content-Type', 'application/json');
     res.status(200).json({ temperature: temperature });

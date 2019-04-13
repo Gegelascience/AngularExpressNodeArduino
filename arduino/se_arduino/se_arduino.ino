@@ -6,6 +6,7 @@
 #endif
 
 #include <avr/wdt.h>
+#include <ArduinoJson.h>
 
 /* Broche du bus 1-Wire alim 5v */
 const byte BROCHE_ONEWIRE = 7;
@@ -22,7 +23,10 @@ Ds18b20 sensor(BROCHE_ONEWIRE);
 Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 
 int delayval = 50; // delay for writting on leds
-int timeBeforeReset = 2;
+int timeBeforeReset = 1;
+
+// JSON doc
+DynamicJsonDocument doc(1024);
 
 void setup() {
   // put your setup code here, to run once:
@@ -31,68 +35,74 @@ void setup() {
   #if defined (__AVR_ATtiny85__)
     if (F_CPU == 16000000) clock_prescale_set(clock_div_1);
   #endif
+
+  
   }
 
 void loop() {
   // put your main code here, to run repeatedly:
-
-  if(timeBeforeReset == 0){
-    software_Reboot();
-  }
   while (Serial.available()) {
+    
      String commande = Serial.readStringUntil('\n');
-     Serial.println("commande: " + commande);
-     action(commande);
+     deserializeJson(doc, commande);
+     JsonObject obj = doc.as<JsonObject>();
+     action(obj);
      
   }
 
 }
 
-void action(String commande) {
-  if( commande == "led on"){
+void action(JsonObject obj) {
+  String output;
+  if( obj["commande"].as<String>() == "led on"){
     digitalWrite(LED_BUILTIN, HIGH);
-    Serial.println("done on");
-  }else if(commande == "led off"){
+    obj["result"] = "done on";
+  }else if(obj["commande"].as<String>() == "led off"){
     digitalWrite(LED_BUILTIN, LOW);
-    Serial.println("done off");
-  } else if(commande == "red"){
+    obj["result"] = "done off";
+  } else if(obj["commande"].as<String>() == "red"){
     int colors[3];
     colors[0] = 150;
     colors[1] = 0;
     colors[2] = 0;
     setRGB(pixels, NUMPIXELS, delayval, colors);
-    Serial.println("done red");
-  }else if(commande == "green"){
+    obj["result"] = "done red";
+  }else if(obj["commande"].as<String>() == "green"){
     int colors[3];
     colors[0] = 0;
     colors[1] = 150;
     colors[2] = 0;
     setRGB(pixels, NUMPIXELS, delayval, colors);
-    Serial.println("done green");
-  }else if(commande == "blue"){
+    obj["result"] = "done green";
+  }else if(obj["commande"].as<String>() == "blue"){
     int colors[3];
     colors[0] = 0;
     colors[1] = 0;
     colors[2] = 150;
     setRGB(pixels, NUMPIXELS, delayval, colors);
-    Serial.println("done blue");
-  }else if(commande == "white"){
+    obj["result"] = "done blue";
+  }else if(obj["commande"].as<String>() == "white"){
     int colors[3];
     colors[0] = 150;
     colors[1] = 150;
     colors[2] = 150;
     setRGB(pixels, NUMPIXELS, delayval, colors);
-    Serial.println("done white");
-  }else if(commande == "temperature"){
+    obj["result"] = "done white";
+  }else if(obj["commande"].as<String>() == "temperature"){
     float temperatureSensor;
     /* Lit la température ambiante à ~1Hz */
     if (sensor.getTemperature(&temperatureSensor, true) != true) {
     return;
     }
     /* Affiche la température DS18B20 */
-    Serial.println(String(temperatureSensor));
+    obj["result"] = String(temperatureSensor);
   }else {
-    Serial.println("error");
+    obj["result"] = "error";
+  }
+  serializeJson(doc, output);
+  Serial.println(output);
+  if(timeBeforeReset == 0){
+    software_Reboot();
   }
 }
 
