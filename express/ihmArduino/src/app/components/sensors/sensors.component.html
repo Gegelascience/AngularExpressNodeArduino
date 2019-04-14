@@ -1,0 +1,14 @@
+<div class="row">
+  <div class="col center">
+    <button (click)="updateDistance()">Distance</button>
+    <br>
+    <div *ngIf="!waitDist">{{ distance }}</div>
+    <div *ngIf="waitDist">récupération de la distance en cours</div>
+  </div>
+  <div class="col center">
+    <button (click)="updateTemperature()">Temperature</button>
+    <br>
+    <div *ngIf="!waitTemp">{{ temperature }}</div>
+    <div *ngIf="waitTemp">récupération de la température en cours</div>
+  </div>
+</div>

@@ -1,17 +1,10 @@
-<p>Allumer ou éteindre la led de l'arduino</p>
-<button (click)="switchOnLight()">Allumer la lumière</button>
-<button (click)="switchOffLight()">Eteindre la lumière</button>
+<app-led-arduino></app-led-arduino>
 <p></p>
-
-<button (click)="updateTemperature()">Temperature</button>
-<div *ngIf="!waitTemp">{{ temperature }}</div>
-<div *ngIf="waitTemp">récupération de la température en cours</div>
 <button (click)="setRed()">Lumière Rouge</button>
 <button (click)="setGreen()">Lumière Verte</button>
 <button (click)="setBlue()">Lumière Bleue</button>
 <button (click)="setWhite()">Lumière Blanche</button>
 <button (click)="clearNeopixels()">Eteindre les neopixels</button>
 <p></p>
-<button (click)="updateDistance()">Distance</button>
-<div *ngIf="!waitDist">{{ distance }}</div>
-<div *ngIf="waitDist">récupération de la distance en cours</div>
+
+<app-sensors></app-sensors>

@@ -10,12 +10,16 @@ import { Error404Component } from './components/error404/error404.component';
 import { ArduinoTemperatureService } from './services/arduino-temperature.service';
 import { ArduinoNeoPixelsService } from './services/arduino-neo-pixels.service';
 import { UltrasonService } from './services/ultrason.service';
+import { SensorsComponent } from './components/sensors/sensors.component';
+import { LedArduinoComponent } from './components/led-arduino/led-arduino.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    Error404Component
+    Error404Component,
+    SensorsComponent,
+    LedArduinoComponent
   ],
   imports: [
     BrowserModule,
