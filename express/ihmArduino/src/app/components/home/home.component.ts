@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ArduinoOnOffService } from '../../services/arduino-on-off.service';
 import { ArduinoTemperatureService } from 'src/app/services/arduino-temperature.service';
 import { ArduinoNeoPixelsService } from 'src/app/services/arduino-neo-pixels.service';
+import { UltrasonService } from 'src/app/services/ultrason.service';
 
 @Component({
   selector: 'app-home',
@@ -12,10 +13,13 @@ export class HomeComponent implements OnInit {
 
   temperature = '';
   waitTemp = false;
+  distance = '';
+  waitDist = false;
 
   constructor(private arduinoOnOff: ArduinoOnOffService,
     private temperatureService: ArduinoTemperatureService,
-    private neoPixels: ArduinoNeoPixelsService) { }
+    private neoPixels: ArduinoNeoPixelsService,
+    private ultrason: UltrasonService) { }
 
   ngOnInit() {
 
@@ -26,6 +30,14 @@ export class HomeComponent implements OnInit {
     this.temperatureService.getTemperature().subscribe(data => {
       this.temperature = data.temperature + '°C';
       this.waitTemp = false;
+    });
+  }
+
+  updateDistance() {
+    this.waitDist = true;
+    this.ultrason.getDistance().subscribe(data => {
+      this.distance = data.distance + ' mm';
+      this.waitDist = false;
     });
   }
 

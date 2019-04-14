@@ -10,3 +10,7 @@
 <button (click)="setGreen()">Lumière Verte</button>
 <button (click)="setBlue()">Lumière Bleue</button>
 <button (click)="setWhite()">Lumière Blanche</button>
+<p></p>
+<button (click)="updateDistance()">Distance</button>
+<div *ngIf="!waitDist">{{ distance }}</div>
+<div *ngIf="waitDist">récupération de la distance en cours</div>

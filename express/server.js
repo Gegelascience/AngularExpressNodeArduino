@@ -3,12 +3,15 @@ const SerialPort = require('serialport')
 const Readline = require('@serialport/parser-readline')
 const port = new SerialPort(usbserial, { baudRate: 115200 })
 const parser = port.pipe(new Readline({ delimiter: '\r\n' }))
-var temperature = "2";
+var temperature = "0";
+var distance = "0";
 parser.on('data', data => {
   console.log(data);
   var resp = JSON.parse(data);
   if (resp.commande === "temperature") {
     temperature = resp.result;
+  } else if (resp.commande === "distance") {
+    distance = resp.result;
   }
 })
 
@@ -44,7 +47,16 @@ app.get("/temperature", function (req, res) {
     res.status(200).json({ temperature: temperature });
   }, 2000)
 
-})
+});
+
+app.get("/distance", function (req, res) {
+  port.write(JSON.stringify({ commande: "distance", result: "" }));
+  setTimeout(() => {
+    res.setHeader('Content-Type', 'application/json');
+    res.status(200).json({ distance: distance });
+  }, 2000)
+
+});
 
 // finish by fallback
 app.use(fallback("index.html", { root: root }));
@@ -52,4 +64,4 @@ app.use(fallback("index.html", { root: root }));
 //load server on port 8081
 app.listen(8081);
 //server ready
-console.log("Serveur ok server on port 8081");
+console.log("Server ok server on port 8081");

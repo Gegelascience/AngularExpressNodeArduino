@@ -9,6 +9,7 @@ import { HomeComponent } from './components/home/home.component';
 import { Error404Component } from './components/error404/error404.component';
 import { ArduinoTemperatureService } from './services/arduino-temperature.service';
 import { ArduinoNeoPixelsService } from './services/arduino-neo-pixels.service';
+import { UltrasonService } from './services/ultrason.service';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,7 @@ import { ArduinoNeoPixelsService } from './services/arduino-neo-pixels.service';
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [ArduinoOnOffService, ArduinoTemperatureService, ArduinoNeoPixelsService],
+  providers: [ArduinoOnOffService, ArduinoTemperatureService, ArduinoNeoPixelsService, UltrasonService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

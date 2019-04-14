@@ -28,6 +28,18 @@ int timeBeforeReset = 1;
 // JSON doc
 DynamicJsonDocument doc(1024);
 
+/* Alim 5v ultrason*/
+/* Constantes pour les broches */
+const byte TRIGGER_PIN = 2; // Broche TRIGGER
+const byte ECHO_PIN = 3;    // Broche ECHO
+
+/* Constantes pour le timeout */
+const unsigned long MEASURE_TIMEOUT = 25000UL; // 25ms = ~8m à 340m/s
+
+/* Vitesse du son dans l'air en mm/us */
+const float SOUND_SPEED = 340.0 / 1000;
+
+
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(115200);
@@ -35,8 +47,10 @@ void setup() {
   #if defined (__AVR_ATtiny85__)
     if (F_CPU == 16000000) clock_prescale_set(clock_div_1);
   #endif
+  pinMode(TRIGGER_PIN, OUTPUT);
+  digitalWrite(TRIGGER_PIN, LOW); // La broche TRIGGER doit être à LOW au repos
+  pinMode(ECHO_PIN, INPUT);
 
-  
   }
 
 void loop() {
@@ -96,6 +110,13 @@ void action(JsonObject obj) {
     }
     /* Affiche la température DS18B20 */
     obj["result"] = String(temperatureSensor);
+  }else if(obj["commande"].as<String>() == "distance"){
+    digitalWrite(TRIGGER_PIN, HIGH);
+    delayMicroseconds(10);
+    digitalWrite(TRIGGER_PIN, LOW);
+    long measure = pulseIn(ECHO_PIN, HIGH, MEASURE_TIMEOUT);
+    float distance_mm = measure / 2.0 * SOUND_SPEED;
+    obj["result"] = String(distance_mm);
   }else {
     obj["result"] = "error";
   }
