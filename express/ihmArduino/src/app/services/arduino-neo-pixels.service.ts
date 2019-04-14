@@ -13,7 +13,7 @@ export class ArduinoNeoPixelsService {
     return this.http.post('/neopixel', { color: 'r' + red + 'g' + green + 'b' + blue });
   }
 
-  clear() {
+  clear(): Observable<any> {
     return this.http.post('/neopixel', { color: 'r0g0b0' });
   }
 }

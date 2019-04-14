@@ -76,5 +76,10 @@ export class HomeComponent implements OnInit {
       console.log(data.color);
     });
   }
+  clearNeopixels() {
+    this.neoPixels.clear().subscribe(data => {
+      console.log(data.color);
+    })
+  }
 
 }

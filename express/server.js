@@ -62,6 +62,6 @@ app.get("/distance", function (req, res) {
 app.use(fallback("index.html", { root: root }));
 
 //load server on port 8081
-app.listen(8081);
+app.listen(8081, '0.0.0.0');
 //server ready
 console.log("Server ok server on port 8081");
