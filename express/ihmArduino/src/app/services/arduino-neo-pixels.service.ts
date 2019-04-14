@@ -9,7 +9,11 @@ export class ArduinoNeoPixelsService {
 
   constructor(private http: HttpClient) { }
 
-  setColor(color: string): Observable<any> {
-    return this.http.post('/neopixel', { color: color });
+  setColor(red: Number, green: Number, blue: Number): Observable<any> {
+    return this.http.post('/neopixel', { color: 'r' + red + 'g' + green + 'b' + blue });
+  }
+
+  clear() {
+    return this.http.post('/neopixel', { color: 'r0g0b0' });
   }
 }

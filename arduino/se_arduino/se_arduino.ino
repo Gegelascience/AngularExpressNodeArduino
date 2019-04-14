@@ -74,35 +74,7 @@ void action(JsonObject obj) {
   }else if(obj["commande"].as<String>() == "led off"){
     digitalWrite(LED_BUILTIN, LOW);
     obj["result"] = "done off";
-  } else if(obj["commande"].as<String>() == "red"){
-    int colors[3];
-    colors[0] = 150;
-    colors[1] = 0;
-    colors[2] = 0;
-    setRGB(pixels, NUMPIXELS, delayval, colors);
-    obj["result"] = "done red";
-  }else if(obj["commande"].as<String>() == "green"){
-    int colors[3];
-    colors[0] = 0;
-    colors[1] = 150;
-    colors[2] = 0;
-    setRGB(pixels, NUMPIXELS, delayval, colors);
-    obj["result"] = "done green";
-  }else if(obj["commande"].as<String>() == "blue"){
-    int colors[3];
-    colors[0] = 0;
-    colors[1] = 0;
-    colors[2] = 150;
-    setRGB(pixels, NUMPIXELS, delayval, colors);
-    obj["result"] = "done blue";
-  }else if(obj["commande"].as<String>() == "white"){
-    int colors[3];
-    colors[0] = 150;
-    colors[1] = 150;
-    colors[2] = 150;
-    setRGB(pixels, NUMPIXELS, delayval, colors);
-    obj["result"] = "done white";
-  }else if(obj["commande"].as<String>() == "temperature"){
+  } else if(obj["commande"].as<String>() == "temperature"){
     float temperatureSensor;
     /* Lit la température ambiante à ~1Hz */
     if (sensor.getTemperature(&temperatureSensor, true) != true) {
@@ -117,6 +89,15 @@ void action(JsonObject obj) {
     long measure = pulseIn(ECHO_PIN, HIGH, MEASURE_TIMEOUT);
     float distance_mm = measure / 2.0 * SOUND_SPEED;
     obj["result"] = String(distance_mm);
+  }else if(obj["commande"].as<String>().substring(0,1) == "r"){
+    unsigned int g = obj["commande"].as<String>().indexOf('g');
+    unsigned int b = obj["commande"].as<String>().indexOf('b');
+    int colors[3];
+    colors[0] = obj["commande"].as<String>().substring(1,g).toInt();
+    colors[1] = obj["commande"].as<String>().substring(g+1,b).toInt();
+    colors[2] = obj["commande"].as<String>().substring(b+1).toInt();
+    setRGB(pixels, NUMPIXELS, delayval, colors);
+    obj["result"] = obj["commande"].as<String>();
   }else {
     obj["result"] = "error";
   }

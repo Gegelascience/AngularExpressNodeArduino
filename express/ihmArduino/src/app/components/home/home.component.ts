@@ -54,25 +54,25 @@ export class HomeComponent implements OnInit {
   }
 
   setRed() {
-    this.neoPixels.setColor('red').subscribe(data => {
+    this.neoPixels.setColor(255, 0, 0).subscribe(data => {
       console.log(data.color);
     });
   }
 
   setGreen() {
-    this.neoPixels.setColor('green').subscribe(data => {
+    this.neoPixels.setColor(0, 255, 0).subscribe(data => {
       console.log(data.color);
     });
   }
 
   setBlue() {
-    this.neoPixels.setColor('blue').subscribe(data => {
+    this.neoPixels.setColor(0, 0, 255).subscribe(data => {
       console.log(data.color);
     });
   }
 
   setWhite() {
-    this.neoPixels.setColor('white').subscribe(data => {
+    this.neoPixels.setColor(255, 255, 255).subscribe(data => {
       console.log(data.color);
     });
   }
