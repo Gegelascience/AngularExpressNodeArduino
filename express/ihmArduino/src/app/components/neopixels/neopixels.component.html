@@ -1,0 +1,23 @@
+<p class="center">Jouer avec la lumière des neopixels</p>
+<div class="d-flex justify-content-around">
+  <div class="">
+    <button (click)="setRGB(255,0,0)">Lumière Rouge</button>
+  </div>
+  <div class="">
+    <button (click)="setRGB(0,255,0)">Lumière Verte</button>
+  </div>
+  <div class="">
+    <button (click)="setRGB(0,0,255)">Lumière Bleue</button>
+  </div>
+  <div class="">
+    <button (click)="setRGB(255,255,255)">Lumière Blanche</button>
+  </div>
+</div>
+<p></p>
+<div class="d-flex justify-content-around">
+  <form name="form" (ngSubmit)="onSubmit()" #f="ngForm">
+    <input type="color" name="color" [(ngModel)]="model.color" #color="ngModel">
+    <button class="">Lumière Perso</button>
+  </form>
+  <button (click)="clearNeopixels()">Eteindre les neopixels</button>
+</div>

@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -12,6 +13,7 @@ import { ArduinoNeoPixelsService } from './services/arduino-neo-pixels.service';
 import { UltrasonService } from './services/ultrason.service';
 import { SensorsComponent } from './components/sensors/sensors.component';
 import { LedArduinoComponent } from './components/led-arduino/led-arduino.component';
+import { NeopixelsComponent } from './components/neopixels/neopixels.component';
 
 @NgModule({
   declarations: [
@@ -19,12 +21,14 @@ import { LedArduinoComponent } from './components/led-arduino/led-arduino.compon
     HomeComponent,
     Error404Component,
     SensorsComponent,
-    LedArduinoComponent
+    LedArduinoComponent,
+    NeopixelsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [ArduinoOnOffService, ArduinoTemperatureService, ArduinoNeoPixelsService, UltrasonService],
   bootstrap: [AppComponent]
