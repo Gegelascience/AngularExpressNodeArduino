@@ -1,13 +1,13 @@
-<p class="center">Capteurs</p>
+<p class="center">Etats des capteurs</p>
 <div class="row no-margin">
   <div class="col no-padding center">
-    <button (click)="updateDistance()">Distance</button>
+    <button class="btn btn-primary" (click)="updateDistance()">Distance</button>
     <br>
     <div *ngIf="!waitDist">{{ distance }}</div>
     <div *ngIf="waitDist">récupération de la distance en cours</div>
   </div>
   <div class="col no-padding center">
-    <button (click)="updateTemperature()">Temperature</button>
+    <button class="btn btn-warning" (click)="updateTemperature()">Temperature</button>
     <br>
     <div *ngIf="!waitTemp">{{ temperature }}</div>
     <div *ngIf="waitTemp">récupération de la température en cours</div>
