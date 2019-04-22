@@ -8,6 +8,8 @@ import { ArduinoOnOffService } from '../../services/arduino-on-off.service';
 })
 export class LedArduinoComponent implements OnInit {
 
+  ledOn = false;
+
   constructor(private arduinoOnOff: ArduinoOnOffService) { }
 
   ngOnInit() {
@@ -16,12 +18,14 @@ export class LedArduinoComponent implements OnInit {
   switchOnLight() {
     this.arduinoOnOff.updateLight('on').subscribe(data => {
       console.log(data.light);
+      this.ledOn = true;
     });
   }
 
   switchOffLight() {
     this.arduinoOnOff.updateLight('off').subscribe(data => {
       console.log(data.light);
+      this.ledOn = false;
     });
   }
 
