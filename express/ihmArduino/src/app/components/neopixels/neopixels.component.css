@@ -1,0 +1,29 @@
+.center-content{
+    display: flex;
+    justify-content: center;
+}
+
+.btn.color{
+    width: 142px;
+}
+
+.head{
+    height: 10vh;
+}
+
+.sub-row{
+    height: 25vh;
+}
+
+.row{
+    margin: unset;
+}
+
+.col-principal{
+    padding: unset;
+    height: 60vh;
+}
+
+.classic-color{
+    margin-bottom: 10px;
+}

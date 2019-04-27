@@ -1,23 +1,40 @@
-<p class="center">Jouer avec la lumière des neopixels</p>
-<div class="d-flex justify-content-around">
-  <div class="">
-    <button class="btn bg-danger" (click)="setRGB(255,0,0)">Lumière Rouge</button>
+<p class="center head">Jouer avec la lumière des neopixels</p>
+<div class="row">
+  <div class="col-6 col-principal ">
+    <p class="center">Couleurs Prédéfinies</p>
+    <div class="row center-content classic-color">
+      <button class="btn bg-danger color" (click)="setRGB(255,0,0)">Lumière Rouge</button>
+    </div>
+    <div class="row center-content classic-color">
+      <button class="btn bg-success color" (click)="setRGB(0,255,0)">Lumière Verte</button>
+    </div>
+    <div class="row center-content classic-color">
+      <button class="btn bg-primary color" (click)="setRGB(0,0,255)">Lumière Bleue</button>
+    </div>
+    <div class="row center-content classic-color">
+      <button class="btn bg-white color" (click)="setRGB(255,255,255)">Lumière Blanche</button>
+    </div>
   </div>
-  <div class="">
-    <button class="btn bg-success" (click)="setRGB(0,255,0)">Lumière Verte</button>
-  </div>
-  <div class="">
-    <button class="btn bg-primary" (click)="setRGB(0,0,255)">Lumière Bleue</button>
-  </div>
-  <div class="">
-    <button class="btn bg-white" (click)="setRGB(255,255,255)">Lumière Blanche</button>
+  <div class="col-6 col-principal">
+    <p class="center row" style="display:flow-root">Couleur Personnalisée</p>
+    <form class="row center-content sub-row" name="form" (ngSubmit)="onSubmit()" #f="ngForm">
+      <input type="color" name="color" [(ngModel)]="model.color" #color="ngModel">
+      <div>
+        <button class="">Lumière Perso</button>
+      </div>
+    </form>
+    <div class="row center-content sub-row ">
+      <div>
+        <p class="center">Réinitialisation les neopixels</p>
+        <button style="transform:translate(7vh)" class="btn btn-secondary" (click)="clearNeopixels()">Eteindre les
+          neopixels</button>
+      </div>
+    </div>
   </div>
 </div>
 <p></p>
-<div class="d-flex justify-content-around">
-  <form name="form" (ngSubmit)="onSubmit()" #f="ngForm">
-    <input type="color" name="color" [(ngModel)]="model.color" #color="ngModel">
-    <button class="">Lumière Perso</button>
-  </form>
-  <button class="btn bg-secondary" (click)="clearNeopixels()">Eteindre les neopixels</button>
+
+
+<div class="center-content">
+  <button class="btn btn-secondary" routerLink="/home">Retour à l'accueil</button>
 </div>
